@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
   let [inputName, setName] = useState(null);
   let [inputPassword, setPassword] = useState(null);
+  const navigate = useNavigate();
   return (
     <div>
       <h1>------Login-----</h1>
@@ -16,6 +18,9 @@ const Login = () => {
             .post("http://localhost:5000/user/login", infoLogin)
             .then((res) => {
               console.log(res.data);
+              localStorage.setItem("token", res.data.accessToken);
+              // localStorage.getItem("token")
+              navigate("/");
             })
             .catch((error) => {
               console.log(error);
